@@ -16,5 +16,5 @@ public:
 	void Finalize();
 
 private:
-	int Estado;
+	int Estado;////ACT2: Mal <-- Esta variable debe ser de tipo "Estado", ya que lo creaste arriba.
 };
