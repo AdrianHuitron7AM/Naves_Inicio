@@ -1,38 +1,47 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Game.h"
+#include "Config.h"
 #include <SDL.h>
 #include <SDL_image.h>
 
-CGame::CGame(){
+CGame::CGame()
+{
 	estado = ESTADO_INICIANDO;
 	atexit(SDL_Quit);
 }
 
 // Con esta función eliminaremos todos los elementos en pantalla
-void CGame::Finalize(){
+void CGame::Finalize()
+{
 	SDL_Quit();
 }
 
-void CGame::Iniciando(){
-	if (SDL_Init(SDL_INIT_VIDEO)){
+void CGame::Iniciando()
+{
+	if (SDL_Init(SDL_INIT_VIDEO))
+	{
 
 		printf("Error %s ", SDL_GetError());
-
 		exit(EXIT_FAILURE);
-
 	}
 
-	screen = SDL_SetVideoMode(640, 480, 24, SDL_SWSURFACE);
-	if (screen == NULL){
 
-		printf("Error %s ", SDL_GetError());
+	screen = SDL_SetVideoMode(WIDTH_SCREEN, HEIGHT_SCREEN, 24, SDL_HWSURFACE);
+	if (screen == NULL)
+	{
 
-		exit(EXIT_FAILURE);
 
+		screen = SDL_SetVideoMode(640, 480, 24, SDL_SWSURFACE);
+		if (screen == NULL)
+		{
+
+			printf("Error %s ", SDL_GetError());
+			exit(EXIT_FAILURE);
+		}
+
+		SDL_WM_SetCaption("Mi primer Juego", NULL);
 	}
-
-	SDL_WM_SetCaption("Mi primer Juego", NULL);
 }
 
 bool CGame::Start()
@@ -71,7 +80,7 @@ bool CGame::Start()
 		case Estado::ESTADO_TERMINANDO: //SALIR
 				salirJuego = true;
 			break;
-		};
+		}
 		SDL_Flip(screen);
     }
 	return true;
