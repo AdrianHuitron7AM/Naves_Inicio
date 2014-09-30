@@ -17,21 +17,15 @@ void CGame::Finalize()
 	SDL_Quit();
 }
 
-<<<<<<< HEAD
-void CGame::Iniciando()
-{
-	if (SDL_Init(SDL_INIT_VIDEO))
-	{
 
-=======
 void CGame::Iniciando(){
 	if (SDL_Init(SDL_INIT_VIDEO)){
->>>>>>> origin/master
+
 		printf("Error %s ", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
 
-<<<<<<< HEAD
+
 
 	screen = SDL_SetVideoMode(WIDTH_SCREEN, HEIGHT_SCREEN, 24, SDL_HWSURFACE);
 	if (screen == NULL)
@@ -41,13 +35,13 @@ void CGame::Iniciando(){
 		screen = SDL_SetVideoMode(640, 480, 24, SDL_SWSURFACE);
 		if (screen == NULL)
 		{
-=======
+
 	screen = SDL_SetVideoMode(640, 480, 24, SDL_SWSURFACE);
 	if (screen == NULL){
 		printf("Error %s ", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
->>>>>>> origin/master
+
 
 			printf("Error %s ", SDL_GetError());
 			exit(EXIT_FAILURE);
