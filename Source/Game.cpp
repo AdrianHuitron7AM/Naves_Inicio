@@ -14,11 +14,14 @@ CGame::CGame()
 // Con esta función eliminaremos todos los elementos en pantalla
 void CGame::Finalize()
 {
+	delete(nave);
+	SDL_FreeSurface(screen);
 	SDL_Quit();
 }
 
 
-void CGame::Iniciando(){
+void CGame::Iniciando()
+{
 	if (SDL_Init(SDL_INIT_VIDEO)){
 
 		printf("Error %s ", SDL_GetError());
@@ -30,26 +33,30 @@ void CGame::Iniciando(){
 	screen = SDL_SetVideoMode(WIDTH_SCREEN, HEIGHT_SCREEN, 24, SDL_HWSURFACE);
 	if (screen == NULL)
 	{
-
-
 		screen = SDL_SetVideoMode(640, 480, 24, SDL_SWSURFACE);
-		if (screen == NULL)
-		{
-
-	screen = SDL_SetVideoMode(640, 480, 24, SDL_SWSURFACE);
-	if (screen == NULL){
+	}
+	if (screen == NULL)
+	{
+		screen = SDL_SetVideoMode(640, 480, 24, SDL_SWSURFACE);
+	}
+	if (screen == NULL)
+	{
 		printf("Error %s ", SDL_GetError());
 		exit(EXIT_FAILURE);
-	}
+	
 
 
 			printf("Error %s ", SDL_GetError());
 			exit(EXIT_FAILURE);
-		}
+	}
 
 		SDL_WM_SetCaption("Mi primer Juego", NULL);
-	}
+
+		nave = new Sprite(screen);
+		nave->CargarImagen("../Data/minave.bmp");
 }
+
+
 
 bool CGame::Start()
 {
@@ -64,21 +71,23 @@ bool CGame::Start()
 		case Estado::ESTADO_INICIANDO: //INICIALIZAR
 			Iniciando();
 			{
-				nave = IMG_LoadJPG_RW(SDL_RWFromFile("../Data/cuadro.jpg","rb"));
-				SDL_Rect fuente;
-				fuente.x = 582;
-				fuente.y = 383;
-				fuente.w = 321;
-				fuente.h = 16;
-				SDL_Rect destino;
-				destino.x = 100;
-				destino.y = 100;
-				destino.w = 100;
-				destino.h = fuente.h;
-				SDL_BlitSurface(nave, &fuente, screen, &destino);	
+				estado = ESTADO_MENU;
+				//nave = IMG_LoadJPG_RW(SDL_RWFromFile("../Data/cuadro.jpg","rb"));
+				//SDL_Rect fuente;
+				//fuente.x = 582;
+				//fuente.y = 383;
+				//fuente.w = 321;
+				//fuente.h = 16;
+				//SDL_Rect destino;
+				//destino.x = 100;
+				//destino.y = 100;
+				//destino.w = 100;
+				//destino.h = fuente.h;
+				//SDL_BlitSurface(nave, &fuente, screen, &destino);	
 			}
 			break;
 		case Estado::ESTADO_MENU: //MENÚ
+			nave->PintarModulo(0,0,0,64,64);
 			break;
 		case Estado::ESTADO_JUGANDO:	//JUGAR	
 			break;

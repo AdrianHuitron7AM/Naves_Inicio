@@ -1,4 +1,5 @@
 #include <SDL.h>;
+#include "Sprite.h"
 class CGame
 {
 public:
@@ -17,7 +18,7 @@ public:
 
 private:
 	void Iniciando();
-	SDL_Surface *screen;
-	SDL_Surface *nave;
+	SDL_Surface * screen;
+	Sprite * nave;
 	Estado estado;
 };
