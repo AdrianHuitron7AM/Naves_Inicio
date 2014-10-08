@@ -54,6 +54,8 @@ void CGame::Iniciando()
 
 		nave = new Sprite(screen);
 		nave->CargarImagen("../Data/minave.bmp");
+
+		//delete nave;
 }
 
 
@@ -87,7 +89,8 @@ bool CGame::Start()
 			}
 			break;
 		case Estado::ESTADO_MENU: //MENÚ
-			nave->PintarModulo(0,0,0,64,64);
+			//nave->PintarModulo(0,0,0,64,64);
+			nave->PintarModulo(0, 100, 100);
 			break;
 		case Estado::ESTADO_JUGANDO:	//JUGAR	
 			break;
