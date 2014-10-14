@@ -80,10 +80,15 @@ bool CGame::Start()
 			//nave->PintarModulo(0, 100, 100);
 			SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
 			keys = SDL_GetKeyState(NULL);
-			if (keys[SDLK_DOWN])
+			if (keys[SDLK_RIGHT])
 			{
-				nave->Pintar();
+				nave->Mover(1);
 			}//Los 3 casos siguientes son el primero aplicado a las demás direcciones
+			if (keys[SDLK_LEFT])
+			{
+				nave->Mover(-1);
+			}
+			nave->Pintar();
 			break;
 		case Estado::ESTADO_JUGANDO:	//JUGAR	
 			break;

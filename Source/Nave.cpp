@@ -13,3 +13,8 @@ void Nave::Pintar()
 {
 	sprite->PintarModulo(0, x, y);
 }
+
+void Nave :: Mover(int posicion)
+{
+	x += posicion;
+}
