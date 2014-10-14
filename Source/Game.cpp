@@ -51,9 +51,7 @@ void CGame::Iniciando()
 	}
 
 		SDL_WM_SetCaption("Mi primer Juego", NULL);
-
-		nave = new Sprite(screen);
-		nave->CargarImagen("../Data/minave.bmp");
+		nave = new Nave(screen, "../Data/minave.bmp");
 
 		//delete nave;
 }
@@ -66,7 +64,7 @@ bool CGame::Start()
 	int salirJuego = false;
           
 	while (salirJuego == false){
-            
+		
 		//Maquina de estados
 		switch(estado)
 		{
@@ -74,23 +72,18 @@ bool CGame::Start()
 			Iniciando();
 			{
 				estado = ESTADO_MENU;
-				//nave = IMG_LoadJPG_RW(SDL_RWFromFile("../Data/cuadro.jpg","rb"));
-				//SDL_Rect fuente;
-				//fuente.x = 582;
-				//fuente.y = 383;
-				//fuente.w = 321;
-				//fuente.h = 16;
-				//SDL_Rect destino;
-				//destino.x = 100;
-				//destino.y = 100;
-				//destino.w = 100;
-				//destino.h = fuente.h;
-				//SDL_BlitSurface(nave, &fuente, screen, &destino);	
+			
 			}
 			break;
 		case Estado::ESTADO_MENU: //MENÚ
 			//nave->PintarModulo(0,0,0,64,64);
-			nave->PintarModulo(0, 100, 100);
+			//nave->PintarModulo(0, 100, 100);
+			SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
+			keys = SDL_GetKeyState(NULL);
+			if (keys[SDLK_DOWN])
+			{
+				nave->Pintar();
+			}//Los 3 casos siguientes son el primero aplicado a las demás direcciones
 			break;
 		case Estado::ESTADO_JUGANDO:	//JUGAR	
 			break;
@@ -100,6 +93,13 @@ bool CGame::Start()
 				salirJuego = true;
 			break;
 		}
+
+		while (SDL_PollEvent(&event)) //SDL creará una lista de eventos ocurridos
+		{
+			if (event.type == SDL_QUIT) { salirJuego = true;}     //Si se detecta una salida de SDL o...
+			if (event.type == SDL_KEYDOWN) {} //... una dirección (abajo) del teclado.
+		}
+
 		SDL_Flip(screen);
     }
 	return true;
