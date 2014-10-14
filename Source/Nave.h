@@ -8,7 +8,8 @@ class Nave
 	int x;
 	int y;
 public:
-	void Mover(int posicion);
+	void MoverX(int posicion);
+	//void MoverY(int posicion);
 	Nave(SDL_Surface * screen, char * rutaImagen); //Constructor
 	void Pintar();
 };

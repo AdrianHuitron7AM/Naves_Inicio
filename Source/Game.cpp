@@ -82,12 +82,25 @@ bool CGame::Start()
 			keys = SDL_GetKeyState(NULL);
 			if (keys[SDLK_RIGHT])
 			{
-				nave->Mover(1);
+				nave->MoverX(1);
 			}//Los 3 casos siguientes son el primero aplicado a las demás direcciones
 			if (keys[SDLK_LEFT])
 			{
-				nave->Mover(-1);
+				nave->MoverX(-1);
 			}
+
+			//Mover en Y, arriba y abajo (opcional)
+			/*if (keys[SDLK_UP])
+			{
+				nave->MoverY(-1);
+			}
+
+			if (keys[SDLK_DOWN])
+			{
+				nave->MoverY(1);
+			}*/
+			//Aqui termina Y
+
 			nave->Pintar();
 			break;
 		case Estado::ESTADO_JUGANDO:	//JUGAR	
