@@ -43,30 +43,30 @@ void CGame::Iniciando()
 	{
 		printf("Error %s ", SDL_GetError());
 		exit(EXIT_FAILURE);
-	
 
 
-			printf("Error %s ", SDL_GetError());
-			exit(EXIT_FAILURE);
+
+		printf("Error %s ", SDL_GetError());
+		exit(EXIT_FAILURE);
 	}
 
-		SDL_WM_SetCaption("Mi primer Juego", NULL);
+	SDL_WM_SetCaption("Mi primer Juego", NULL);
 
-	 
-		nave = new Nave(screen, "../Data/minave.bmp", (WIDTH_SCREEN / 2) /*- (sprite->WidthModule(0) / 2)*/, (HEIGHT_SCREEN - 80) /*- sprite->HeightModule(0)*/);
-		enemigo = new Nave(screen, "../Data/enemigo.bmp", 0, 0);
-		enemigo->SetAutoMovimiento(true);
 
-		//delete nave;
+	nave = new Nave(screen, "../Data/minave.bmp", (WIDTH_SCREEN / 2) /*- (sprite->WidthModule(0) / 2)*/, (HEIGHT_SCREEN - 80) /*- sprite->HeightModule(0)*/);
+	enemigo = new Nave(screen, "../Data/enemigo.bmp", 0, 0);
+	enemigo->SetAutoMovimiento(true);
+
+	//delete nave;
 }
 
 bool CGame::Start()
 {
 	// Esta variable nos ayudara a controlar la salida del juego...
 	int salirJuego = false;
-          
+
 	while (salirJuego == false){
-		
+
 		//Maquina de estados
 		switch(estado)
 		{
@@ -90,12 +90,12 @@ bool CGame::Start()
 			//Mover en Y, arriba y abajo (opcional)
 			/*if (keys[SDLK_UP])
 			{
-				nave->MoverY(-1);
+			nave->MoverY(-1);
 			}
 
 			if (keys[SDLK_DOWN])
 			{
-				nave->MoverY(1);
+			nave->MoverY(1);
 			}*/
 			//Aqui termina Y
 
@@ -107,7 +107,7 @@ bool CGame::Start()
 		case Estado::ESTADO_FINALIZANDO: //FINALIZAR
 			break;
 		case Estado::ESTADO_TERMINANDO: //SALIR
-				salirJuego = true;
+			salirJuego = true;
 			break;
 		}
 
@@ -118,6 +118,6 @@ bool CGame::Start()
 		}
 
 		SDL_Flip(screen);
-    }
+	}
 	return true;
 }

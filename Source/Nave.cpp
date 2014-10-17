@@ -1,7 +1,7 @@
 #include "Nave.h"
 #include "Config.h"
 
-Nave::Nave(SDL_Surface * screen, char * rutaImagen, int x, int )
+Nave::Nave(SDL_Surface * screen, char * rutaImagen, int x, int y)
 {
 	sprite = new Sprite(screen);
 	sprite->CargarImagen(rutaImagen);
