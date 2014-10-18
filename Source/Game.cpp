@@ -64,17 +64,31 @@ bool CGame::Start()
 {
 	// Esta variable nos ayudara a controlar la salida del juego...
 	int salirJuego = false;
-
+	int i = 0;
 	while (salirJuego == false){
 
 		//Maquina de estados
 		switch(estado)
 		{
 		case Estado::ESTADO_INICIANDO: //INICIALIZAR
+			printf("1. ESTADO_INICIANDO");
 			Iniciando();
 			estado = ESTADO_MENU;
 			break;
 		case Estado::ESTADO_MENU: //MENÚ
+			if (i == 0) //bandera que controla que el programa mande a ESTADO_MENU sin regresar a ESTADO_JUGANDO
+			{
+				printf("\n2. ESTADO_MENU");
+				estado = ESTADO_JUGANDO;
+				i = 1;
+			}
+			else
+			{
+				printf("\n2. ESTADO_MENU");
+				estado = ESTADO_FINALIZANDO;
+			}
+			break;
+		case Estado::ESTADO_JUGANDO:	//JUGAR	
 			enemigo->Actualizar();
 			SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
 			keys = SDL_GetKeyState(NULL);
@@ -101,12 +115,22 @@ bool CGame::Start()
 
 			nave->Pintar();
 			enemigo->Pintar();
+
+			if (keys[SDLK_DOWN]) //Para evitar que se cicle en un estado, Pulsamos la tecla Abajo (en ese caso) y esa tecla nos dice que estamos en ESTADO_JUGANDO y nos manda a ESTADO_TERMINANDO;
+			{
+				printf("\n3. ESTADO_JUGANDO");
+				estado = ESTADO_TERMINANDO;
+			}
 			break;
-		case Estado::ESTADO_JUGANDO:	//JUGAR	
-			break;
-		case Estado::ESTADO_FINALIZANDO: //FINALIZAR
-			break;
+		
 		case Estado::ESTADO_TERMINANDO: //SALIR
+			printf("\n4. ESTADO_TERMINANDO");
+			estado = ESTADO_MENU;
+			break;
+
+		case Estado::ESTADO_FINALIZANDO: //FINALIZAR
+			printf("\n5. ESTADO_FINALIZANDO");
+			getchar();
 			salirJuego = true;
 			break;
 		}
