@@ -92,23 +92,29 @@ bool CGame::Start()
 			enemigo->Actualizar();
 			SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
 			keys = SDL_GetKeyState(NULL);
-			if (keys[SDLK_RIGHT])
-			{
-				nave->MoverX(1);
-			}//Los 3 casos siguientes son el primero aplicado a las demás direcciones
 			if (keys[SDLK_LEFT])
 			{
+				if (!EsLimitePantalla(nave))
 				nave->MoverX(-1);
 			}
+			
+			if (keys[SDLK_RIGHT])
+			{
+				if (!EsLimitePantalla(nave))
+				nave->MoverX(1);
+			}//Los 3 casos siguientes son el primero aplicado a las demás direcciones
+			
 
 			//Mover en Y, arriba y abajo (opcional)
 			/*if (keys[SDLK_UP])
 			{
+			if (!EsLimitePantalla(nave))
 			nave->MoverY(-1);
 			}
 
 			if (keys[SDLK_DOWN])
 			{
+			if (!EsLimitePantalla(nave))
 			nave->MoverY(1);
 			}*/
 			//Aqui termina Y
@@ -144,4 +150,17 @@ bool CGame::Start()
 		SDL_Flip(screen);
 	}
 	return true;
+}
+
+bool CGame::EsLimitePantalla(Nave * objeto)
+{
+	if (objeto->ObtenerX() <= 0)
+		return true;
+	if (objeto->ObtenerY() <= 0)
+		return true;
+	if (objeto->ObtenerX() >= WIDTH_SCREEN-objeto->ObtenerW())
+		return true;
+	if (objeto->ObtenerY() >= HEIGHT_SCREEN-objeto->ObtenerH())
+		return true;
+	return false;
 }
