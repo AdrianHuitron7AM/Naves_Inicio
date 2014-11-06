@@ -26,6 +26,6 @@ private:
 
 	SDL_Surface * screen;
 	Nave * nave;
-	Nave * enemigo;
+	Nave *enemigoArreglo [10];
 	Estado estado;
 };

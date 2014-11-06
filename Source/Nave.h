@@ -20,6 +20,7 @@ public:
 	void SetPasoLimite(int pasos);
 	int ObtenerPasoActual();
 	void IncrementarPasoActual();
+	bool EstaColisionando(Nave * b);
 	void Pintar();
 	void Actualizar();
 	int ObtenerX();
