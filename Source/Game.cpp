@@ -7,6 +7,7 @@
 
 CGame::CGame()
 {
+	tiempoFrame = 0;
 	estado = ESTADO_INICIANDO;
 	atexit(SDL_Quit);
 }
@@ -56,8 +57,7 @@ void CGame::Iniciando()
 		enemigoArreglo[i]->SetAutoMovimiento(false);
 		enemigoArreglo[i]->SetPasoLimite(4);
 	}
-
-
+	tick = 0;
 	//delete nave;
 }
 
@@ -130,15 +130,15 @@ bool CGame::Start()
 			for (int i = 0; i < 10; i++)
 			{
 				enemigoArreglo[i]->Pintar();
-		    }
+			}
 
-			if (keys[SDLK_SPACE]) //Para evitar que se cicle en un estado, Pulsamos la tecla Abajo (en ese caso) y esa tecla nos dice que estamos en ESTADO_JUGANDO y nos manda a ESTADO_TERMINANDO;
+			if (keys[SDLK_SPACE]) //Para evitar que se cicle en un estado, Pulsamos la barra espacio (en ese caso) y esa tecla nos dice que estamos en ESTADO_JUGANDO y nos manda a ESTADO_TERMINANDO;
 			{
 				printf("\n3. ESTADO_JUGANDO");
 				estado = ESTADO_TERMINANDO;
 			}
 			break;
-		
+
 		case Estado::ESTADO_TERMINANDO: //SALIR
 			printf("\n4. ESTADO_TERMINANDO");
 			estado = ESTADO_MENU;
@@ -153,11 +153,16 @@ bool CGame::Start()
 
 		while (SDL_PollEvent(&event)) //SDL creará una lista de eventos ocurridos
 		{
-			if (event.type == SDL_QUIT) { salirJuego = true;}     //Si se detecta una salida de SDL o...
+			if (event.type == SDL_QUIT) { salirJuego = true; }     //Si se detecta una salida de SDL o...
 			if (event.type == SDL_KEYDOWN) {} //... una dirección (abajo) del teclado.
 		}
 
 		SDL_Flip(screen);
+		//Calculando FPS
+		int tiempoFrameFinal = SDL_GetTicks();
+		printf("%d %d %f %d\n", tick, SDL_GetTicks(), (float)SDL_GetTicks() / (float)tick, tiempoFrameFinal - tiempoFrame);
+		tiempoFrame = tiempoFrameFinal;//Marcamos el inicio nuevamente
+		tick++;
 	}
 	return true;
 }
