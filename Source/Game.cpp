@@ -7,7 +7,7 @@
 
 CGame::CGame()
 {
-	tiempoFrame = 0;
+	tiempoFrameInicial = 0;
 	estado = ESTADO_INICIANDO;
 	atexit(SDL_Quit);
 }
@@ -100,30 +100,30 @@ bool CGame::Start()
 			if (keys[SDLK_LEFT])
 			{
 				if (!EsLimitePantalla(nave, BORDE_IZQUIERDO))
-					nave->MoverX(-2);
+					nave->MoverX(-15);
 
 			}
 
 			if (keys[SDLK_RIGHT])
 			{
 				if (!EsLimitePantalla(nave, BORDE_DERECHO))
-					nave->MoverX(2);
+					nave->MoverX(15);
 
 			}//Los 3 casos siguientes son el primero aplicado a las demás direcciones
 
 
 			//Mover en Y, arriba y abajo (opcional)
-			/*if (keys[SDLK_UP])
+			if (keys[SDLK_UP])
 			{
 			if (!EsLimitePantalla(nave, BORDE_SUPERIOR))
-			nave->MoverY(-2);
+			nave->MoverY(-15);
 			}
 
 			if (keys[SDLK_DOWN])
 			{
 			if (!EsLimitePantalla(nave, BORDE_INFERIOR))
-			nave->MoverY(2);
-			}*/
+			nave->MoverY(15);
+			}
 			//Aqui termina Y
 
 			nave->Pintar();
@@ -159,9 +159,14 @@ bool CGame::Start()
 
 		SDL_Flip(screen);
 		//Calculando FPS
-		int tiempoFrameFinal = SDL_GetTicks();
-		printf("%d %d %f %d\n", tick, SDL_GetTicks(), (float)SDL_GetTicks() / (float)tick, tiempoFrameFinal - tiempoFrame);
-		tiempoFrame = tiempoFrameFinal;//Marcamos el inicio nuevamente
+		tiempoFrameFinal = SDL_GetTicks();
+		while (tiempoFrameFinal < (tiempoFrameInicial + FPS_DELAY))
+		{
+			tiempoFrameFinal = SDL_GetTicks();
+			SDL_Delay(1);
+		}
+		printf("Frames: %d Tiempo: %d Tiempo promedio: %f Tiempo por frame: %d FPS: %f\n", tick, SDL_GetTicks(), (float)SDL_GetTicks() / (float)tick, tiempoFrameFinal - tiempoFrameInicial, 1000.f / (float) (tiempoFrameFinal-tiempoFrameInicial));
+		tiempoFrameInicial = tiempoFrameFinal;//Marcamos el inicio nuevamente
 		tick++;
 	}
 	return true;
@@ -190,26 +195,36 @@ void CGame::MoverEnemigo()
 	{
 		if (enemigoArreglo[i]->ObtenerPasoActual() == 0)
 			if (!EsLimitePantalla(enemigoArreglo[i], BORDE_DERECHO))
-				enemigoArreglo[i]->MoverX(2);
+				enemigoArreglo[i]->MoverX(15);
 			else
 			{
 				enemigoArreglo[i]->IncrementarPasoActual();
-				enemigoArreglo[i]->IncrementarPasoActual();
+				//enemigoArreglo[i]->IncrementarPasoActual();
 			}
 		if (enemigoArreglo[i]->ObtenerPasoActual() == 1)
 			if (!EsLimitePantalla(enemigoArreglo[i], BORDE_INFERIOR))
-				enemigoArreglo[i]->MoverY(2);//ABAJO
-		if (enemigoArreglo[i]->ObtenerPasoActual() == 2)
-			if (!EsLimitePantalla(enemigoArreglo[i], BORDE_IZQUIERDO))
-				enemigoArreglo[i]->MoverX(-2);//IZQUIERDA
+				enemigoArreglo[i]->MoverY(15);//ABAJO
 			else
 			{
 				enemigoArreglo[i]->IncrementarPasoActual();
+				//enemigoArreglo[i]->IncrementarPasoActual();
+			}
+		if (enemigoArreglo[i]->ObtenerPasoActual() == 2)
+			if (!EsLimitePantalla(enemigoArreglo[i], BORDE_IZQUIERDO))
+				enemigoArreglo[i]->MoverX(-15);//IZQUIERDA
+			else
+			{
 				enemigoArreglo[i]->IncrementarPasoActual();
+				//enemigoArreglo[i]->IncrementarPasoActual();
 			}
 		if (enemigoArreglo[i]->ObtenerPasoActual() == 3)
-			if (!EsLimitePantalla(enemigoArreglo[i], BORDE_INFERIOR))
-				enemigoArreglo[i]->MoverX(2);//ABAJO
+			if (!EsLimitePantalla(enemigoArreglo[i], BORDE_SUPERIOR))
+				enemigoArreglo[i]->MoverY(-15);//ABAJO
+			else
+			{
+				enemigoArreglo[i]->IncrementarPasoActual();
+				//enemigoArreglo[i]->IncrementarPasoActual();
+			}
 	}
 
 }
