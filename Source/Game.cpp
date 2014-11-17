@@ -49,11 +49,12 @@ void CGame::Iniciando()
 	SDL_WM_SetCaption("Mi primer Juego", NULL);
 
 
-	nave = new Nave(screen, "../Data/minave.bmp", (WIDTH_SCREEN / 2) /*- (sprite->WidthModule(0) / 2)*/, (HEIGHT_SCREEN - 80) /*- sprite->HeightModule(0)*/);
+	nave = new Nave(screen, "../Data/minave.bmp", (WIDTH_SCREEN / 2) , (HEIGHT_SCREEN - 80), 0);
+	menu = new Nave(screen, "../Data/notspacewar.bmp",0,0,1);
 
 	for (int i = 0; i < 10; i++)
 	{
-		enemigoArreglo[i] = new Nave(screen, "../Data/enemigo.bmp", i*60, 0);
+		enemigoArreglo[i] = new Nave(screen, "../Data/enemigo.bmp", i*60, 0, 2);
 		enemigoArreglo[i]->SetAutoMovimiento(false);
 		enemigoArreglo[i]->SetPasoLimite(4);
 	}
@@ -72,22 +73,11 @@ bool CGame::Start()
 		switch (estado)
 		{
 		case Estado::ESTADO_INICIANDO: //INICIALIZAR
-			printf("1. ESTADO_INICIANDO");
 			Iniciando();
 			estado = ESTADO_MENU;
 			break;
-		case Estado::ESTADO_MENU: //MENÚ
-			if (i == 0) //bandera que controla que el programa mande a ESTADO_MENU sin regresar a ESTADO_JUGANDO
-			{
-				printf("\n2. ESTADO_MENU");
-				estado = ESTADO_JUGANDO;
-				i = 1;
-			}
-			else
-			{
-				printf("\n2. ESTADO_MENU");
-				estado = ESTADO_FINALIZANDO;
-			}
+		case Estado::ESTADO_MENU: //MENU
+			menu->Pintar();
 			break;
 		case Estado::ESTADO_JUGANDO:	//JUGAR	
 			for (int i = 0; i < 10; i++)
@@ -131,22 +121,13 @@ bool CGame::Start()
 			{
 				enemigoArreglo[i]->Pintar();
 			}
-
-			if (keys[SDLK_SPACE]) //Para evitar que se cicle en un estado, Pulsamos la barra espacio (en ese caso) y esa tecla nos dice que estamos en ESTADO_JUGANDO y nos manda a ESTADO_TERMINANDO;
-			{
-				printf("\n3. ESTADO_JUGANDO");
-				estado = ESTADO_TERMINANDO;
-			}
 			break;
 
 		case Estado::ESTADO_TERMINANDO: //SALIR
-			printf("\n4. ESTADO_TERMINANDO");
-			estado = ESTADO_MENU;
+
 			break;
 
 		case Estado::ESTADO_FINALIZANDO: //FINALIZAR
-			printf("\n5. ESTADO_FINALIZANDO");
-			getchar();
 			salirJuego = true;
 			break;
 		}
