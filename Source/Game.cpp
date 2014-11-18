@@ -8,7 +8,7 @@
 CGame::CGame()
 {
 	tiempoFrameInicial = 0;
-	estado = ESTADO_INICIANDO;
+	estado = ESTADO_JUGANDO;
 	atexit(SDL_Quit);
 }
 
