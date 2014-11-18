@@ -8,7 +8,7 @@
 CGame::CGame()
 {
 	tiempoFrameInicial = 0;
-	estado = ESTADO_INICIANDO;
+	estado = ESTADO_JUGANDO;
 	atexit(SDL_Quit);
 }
 
@@ -49,20 +49,16 @@ void CGame::Iniciando()
 	SDL_WM_SetCaption("Mi primer Juego", NULL);
 
 
-	nave = new Nave(screen, "../Data/minave.bmp", (WIDTH_SCREEN / 2) , (HEIGHT_SCREEN - 80), MODULO_MINAVE_NAVE);
-	menu = new Nave(screen, "../Data/notspacewar.bmp", 0, 0, MODULO_MENU_FONDO);
-	textos = new Nave(screen, "../Data/menubase.bmp", 0, 0, -1);
-	//textos = new Nave(screen, "../Data/menubase.bmp", 0, 0, MODULO_TEXTOS_NOMBRE);
-	fondo = new Nave(screen, "../Data/nivel1.bmp", 0, 0, 1);
+	nave = new Nave(screen, "../Data/minave.bmp", (WIDTH_SCREEN / 2) , (HEIGHT_SCREEN - 80), 0);
+	menu = new Nave(screen, "../Data/notspacewar.bmp",0,0,1);
 
 	for (int i = 0; i < 10; i++)
 	{
-		enemigoArreglo[i] = new Nave(screen, "../Data/enemigo.bmp", i*60, 0, MODULO_ENEMIGO_NAVE);
+		enemigoArreglo[i] = new Nave(screen, "../Data/enemigo.bmp", i*60, 0, 2);
 		enemigoArreglo[i]->SetAutoMovimiento(false);
 		enemigoArreglo[i]->SetPasoLimite(4);
 	}
 	tick = 0;
-	opcionSeleccionada = MODULO_TEXTO_MENUOPCION1;
 	//delete nave;
 }
 
@@ -82,20 +78,14 @@ bool CGame::Start()
 			break;
 		case Estado::ESTADO_MENU: //MENU
 			menu->Pintar();
-			textos->Pintar(MODULO_TEXTO_TITULO,100,50);
-			textos->Pintar(MODULO_TEXTO_NOMBRE, 300, 390);
-			Menu();
-			//estado = ESTADO_JUGANDO;
 			break;
 		case Estado::ESTADO_JUGANDO:	//JUGAR	
-			SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
-			fondo->Pintar();
 			for (int i = 0; i < 10; i++)
 			{
 				enemigoArreglo[i]->Actualizar();
 			}
 			MoverEnemigo();
-			
+			SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
 			keys = SDL_GetKeyState(NULL);
 			if (keys[SDLK_LEFT])
 			{
@@ -131,7 +121,6 @@ bool CGame::Start()
 			{
 				enemigoArreglo[i]->Pintar();
 			}
-			
 			break;
 
 		case Estado::ESTADO_TERMINANDO: //SALIR
@@ -218,17 +207,7 @@ void CGame::MoverEnemigo()
 				//enemigoArreglo[i]->IncrementarPasoActual();
 			}
 	}
-}
 
-void CGame::Menu()
-{
-	for (int i = MODULO_TEXTO_MENUOPCION1, j = 0; i <= MODULO_TEXTO_MENUOPCION2; i++, j++)
-	{
-		if (i == opcionSeleccionada)
-			textos->Pintar(i+2, 200, 180 + (j * 80));
-		else
-		textos->Pintar(i, 200, 180 + (j * 80));
-	}
 }
 
 bool Nave::EstaColisionando(Nave * b)
