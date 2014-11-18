@@ -23,6 +23,7 @@ public:
 	void IncrementarPasoActual();
 	bool EstaColisionando(Nave * b);
 	void Pintar();
+	void Pintar(int module, int x, int y);
 	void Actualizar();
 	int ObtenerX();
 	int ObtenerY();
