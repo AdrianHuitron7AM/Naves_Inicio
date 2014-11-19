@@ -47,6 +47,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\Librerias\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -71,19 +72,26 @@
   <ItemGroup>
     <ClCompile Include="..\Source\main.cpp" />
     <ClCompile Include="..\Source\Game.cpp" />
-    <ClCompile Include="..\Source\Nave.cpp" />
-    <ClCompile Include="..\Source\Sprite.cpp" />
-    <ClCompile Include="..\Source\SpriteDef.cpp" />
+    <ClCompile Include="..\Source\nave.cpp" />
+    <ClCompile Include="..\Source\sprite.cpp" />
+    <ClCompile Include="..\Source\spritedef.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Config.h" />
     <ClInclude Include="..\Source\Game.h" />
-    <ClInclude Include="..\Source\Nave.h" />
-    <ClInclude Include="..\Source\Sprite.h" />
-    <ClInclude Include="..\Source\SpriteDef.h" />
+    <ClInclude Include="..\Source\nave.h" />
+    <ClInclude Include="..\Source\sprite.h" />
+    <ClInclude Include="..\Source\spritedef.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Ejecutable\Readme.txt" />
+    <None Include="..\Ejecutable\Read Me!.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,10 +1,10 @@
 #ifndef __NAVE_H__
 #define __NAVE_H__
 #include "Sprite.h"
-#include <SDL.h>
+
 class Nave
 {
-	Sprite *sprite;
+	Sprite * sprite;
 	int x;
 	int y;
 	int w;
@@ -12,16 +12,18 @@ class Nave
 	bool autoMovimiento;
 	int pasoActual;
 	int pasoLimite;
-	int module;//Modulo Actual
+	int module;
+
 public:
 	void MoverX(int posicion);
+
 	void MoverY(int posicion);
-	Nave(SDL_Surface * screen, char * rutaImagen, int x, int y, int module); //Constructor
+	Nave(SDL_Surface * screen,char * rutaImagen,int x,int y, int module);//constructor
 	void SetAutoMovimiento(bool autoMovimiento);
 	void SetPasoLimite(int pasos);
 	int ObtenerPasoActual();
 	void IncrementarPasoActual();
-	bool EstaColisionando(Nave * b);
+	bool EstaColicionando(Nave * b);
 	void Pintar();
 	void Pintar(int module, int x, int y);
 	void Actualizar();
@@ -29,7 +31,8 @@ public:
 	int ObtenerY();
 	int ObtenerW();
 	int ObtenerH();
-};
+}
 
 
 #endif
+;
