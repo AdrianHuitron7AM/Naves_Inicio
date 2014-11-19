@@ -1,0 +1,7 @@
+	 X   Y   W    H
+mod. 4: 12, 14,  139, 24  TITULO
+mod. 5: 12, 59, 138, 47   NOMBRE
+mod. 6: 181, 15, 69, 20	  OPCION1
+mod. 7: 182, 41, 52, 23   OPCION2
+mod. 8: 182, 83, 69, 22   OPCION1_HL
+mod. 9: 181, 115, 51, 23  OPCION2_HL
