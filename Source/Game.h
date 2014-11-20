@@ -1,6 +1,6 @@
 #include <SDL.h>
-#include "Nave.h"
-#include "COnfig.h"
+#include "Objeto.h"
+#include "Config.h"
 
 class CGame
 {
@@ -23,14 +23,14 @@ private:
 	int tick;
 	int tiempoFrame;
 
-	Nave *textos;//textos del juego
-	Nave *menu;//fondo del menu
-    Nave *fondo;//fondo del juego
+	Objeto *textos;//textos del juego
+	Objeto *menu;//fondo del menu
+    Objeto *fondo;//fondo del juego
 
 	void Iniciando();
 	void Menu();
 	void MoverEnemigo();
-	bool EsLimitePantalla(Nave * objeto,int bandera);
+	bool EsLimitePantalla(Objeto * objeto,int bandera);
 
 	int opcionSeleccionada;
 
@@ -38,8 +38,8 @@ private:
 	SDL_Event event;// La variable event de tipo evento de SDL nos servira para monitorizar el teclado
 
 	SDL_Surface *screen;
-	Nave *nave;
+	Objeto *nave;
 	/*Nave* enemigo;*/
-	Nave *enemigoArreglo[10];
+	Objeto *enemigoArreglo[10];
 	Estado estado;
 };
