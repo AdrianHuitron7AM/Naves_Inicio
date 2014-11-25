@@ -1,5 +1,5 @@
-#ifndef __NAVE_H__
-#define __NAVE_H__
+#ifndef __OBJETO_H__
+#define __OBJETO_H__
 #include "Sprite.h"
 
 class Objeto

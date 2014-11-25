@@ -22,16 +22,6 @@ void Sprite::CargarImagen(char * path)
 
 }
 
-//void Sprite::PintarModulo(int nombre, int x, int y ,int w,int h)
-//{
-//	SDL_Rect src;
-//	src.x = x;
-//	src.y = y;
-//	src.w = w;
-//	src.h = h;
-//	SDL_BlitSurface(imagen,&src,screen,NULL);
-//}
-
 void Sprite::PintarModulo(int nombre, int x, int y )
 {
 	SDL_Rect src;

@@ -1,6 +1,9 @@
+#ifndef __GAME_H__
+#define __GAME_H__
 #include <SDL.h>
 #include "Objeto.h"
 #include "Config.h"
+#include "Nave.h"
 
 class CGame
 {
@@ -38,8 +41,9 @@ private:
 	SDL_Event event;// La variable event de tipo evento de SDL nos servira para monitorizar el teclado
 
 	SDL_Surface *screen;
-	Objeto *nave;
-	/*Nave* enemigo;*/
+	Nave *nave;
 	Objeto *enemigoArreglo[10];
 	Estado estado;
 };
+
+#endif
