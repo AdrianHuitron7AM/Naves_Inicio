@@ -117,6 +117,11 @@ bool CGame::Start()
 			}
 			//Aqui termina Y
 
+			if (keys[SDLK_SPACE])
+			{
+				nave->Disparar();
+			}
+
 				nave->Pintar();
 				for(int i=0;i<10;i++)
 				{

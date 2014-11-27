@@ -34,12 +34,19 @@ if(pasoActual>=pasoLimite)
 
 void Objeto:: Pintar()
 {
-	sprite->PintarModulo(module, x, y);
+	if (isVisible)
+		sprite->PintarModulo(module, x, y);
 }
 
 void Objeto::Pintar(int module, int x, int y)
 {
-	sprite->PintarModulo(module, x, y);
+	if (isVisible)
+		sprite->PintarModulo(module, x, y);
+}
+
+void Objeto::SetVisible(bool isVisible)
+{
+	this->isVisible = isVisible;
 }
 
 void Objeto::MoverX(int posicion)
@@ -89,4 +96,10 @@ void Objeto::IncrementarPasoActual()
 bool Objeto::EstaColicionando(Objeto * b)
 {
 	return false;
+}
+
+void Objeto::PonerEn(int x, int y)
+{
+	this->x = x;
+	this->y = y;
 }
