@@ -10,40 +10,60 @@ Nave::Nave(SDL_Surface * screen, char * rutaImagen, int x, int y, int module)
 		bala[i]->SetVisible(false);
 	}
 	balasVisibles = 0;
+	visible = true;
+	colision = false;
+}
+
+void Nave::CrearNuevo()
+{
+	balasVisibles = 0;
+	visible = true;
+	colision = false;
+
+	for (int i = 0; i < MAXIMO_DE_BALAS; i++)
+	{
+		bala[i]->SetVisible(false);
+	}
+	//
+	nave->PonerEn(0, 0); //Mover X y Y
 }
 
 void Nave::Pintar(int tipoNave)
 {
-	nave->Pintar();
-	for (int i = 0; i < MAXIMO_DE_BALAS; i++)
+	if (visible)
 	{
-		bala[i]->Pintar();
-		switch (tipoNave)
+		nave->Pintar();
+		for (int i = 0; i < MAXIMO_DE_BALAS; i++)
 		{
-		case NAVE_PROPIA:
-			bala[i]->MoverY(-30);
-			break;
-		case NAVE_ENEMIGO:
-			bala[i]->MoverY(30);
-			break;
+			bala[i]->Pintar();
+			switch (tipoNave)
+			{
+			case NAVE_PROPIA:
+				bala[i]->MoverY(-30);
+				break;
+			case NAVE_ENEMIGO:
+				bala[i]->MoverY(30);
+				break;
+			}
 		}
-		
 	}
-	
 }
 
 void Nave::Disparar(int tipoNave, int balas)
 {
-	bala[balasVisibles]->SetVisible(true);
-	switch (tipoNave)
+	if (visible)
 	{
-	case NAVE_PROPIA:
-		bala[balasVisibles]->PonerEn(nave->ObtenerX() + nave->ObtenerW() / 2, nave->ObtenerY());
+		bala[balasVisibles]->SetVisible(true);
+		switch (tipoNave)
+		{
+		case NAVE_PROPIA:
+			bala[balasVisibles]->PonerEn(nave->ObtenerX() + nave->ObtenerW() / 2, nave->ObtenerY());
 		break;
 
-	case NAVE_ENEMIGO:
-		bala[balasVisibles]->PonerEn(nave->ObtenerX() + nave->ObtenerW() / 2, nave->ObtenerY() + nave->ObtenerH());
+		case NAVE_ENEMIGO:
+			bala[balasVisibles]->PonerEn(nave->ObtenerX() + nave->ObtenerW() / 2, nave->ObtenerY() + nave->ObtenerH());
 		break;
+		}
 	}
 	
 	balasVisibles++;
@@ -85,7 +105,17 @@ void Nave::AutoDisparar(int balas)
 	Disparar(NAVE_ENEMIGO, balas);
 }
 
-//void Nave::ColisionEnemigo()
-//{
-//	
-//} 
+void Nave::setVisible(bool visible)
+{
+	this->visible = visible;
+}
+
+bool Nave::estaColisionandoConBala(Nave * nave)
+{
+	return colision;
+}
+
+void Nave::simularColision(bool colision)
+{
+	this->colision = colision;
+}

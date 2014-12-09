@@ -8,6 +8,8 @@ class Nave
 	Objeto * nave;
 	Objeto * bala[MAXIMO_DE_BALAS];
 	int balasVisibles;
+	bool visible;
+	bool colision;
 public:
 	Nave(SDL_Surface * screen, char * rutaImagen, int x, int y, int module);
 	void Pintar(int tipoNave);
@@ -18,8 +20,11 @@ public:
 	void MoveRight(int velocidad);
 	void MoveUp(int velocidad);
 	void MoveDown(int velocidad);
-	//void ColisionEnemigo();
 
+	void setVisible(bool visible);
+	bool estaColisionandoConBala(Nave * nave);
+	void simularColision(bool colision);
+	void CrearNuevo();
 	Objeto * GetNaveObjeto();
 
 };

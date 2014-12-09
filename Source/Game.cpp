@@ -86,11 +86,13 @@ bool CGame::Start()
 			break;
 		case Estado::ESTADO_PRE_JUGANDO:
 			nivelActual = 0;
+			vida = 1;
+			enemigosEliminados = 0;
 			estado = ESTADO_JUGANDO;
 			break;
 		case Estado ::ESTADO_JUGANDO:
 
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < nivel[nivelActual].NumeroEnemigosVisibles; i++)
 			{
 				enemigoArreglo[i]->GetNaveObjeto()->Actualizar();
 			}
@@ -108,7 +110,7 @@ bool CGame::Start()
 					nave->MoveLeft(nivel[nivelActual].VelocidadNavePropia);
 			}
 
-			//Mover en Y, arriba y abajo (opcional)
+			//Mover en Y, arriba y abajo
 			if (keys[SDLK_UP])
 			{
 				if (!EsLimitePantalla(nave->GetNaveObjeto(), BORDE_SUPERIOR))
@@ -127,18 +129,60 @@ bool CGame::Start()
 				nave->Disparar(NAVE_PROPIA, nivel[nivelActual].balasMaximas);
 			}
 
-				nave->Pintar(NAVE_PROPIA);
-				for(int i=0;i<10;i++)
+			//SIMULACION DE COLISIONES//
+			if (keys[SDLK_x])//BALA ENEMIGO / NUESTRA NAVE
+			{
+				nave->simularColision(true);
+			}
+			if (keys[SDLK_c])//NUESTRA BALA / NAVE ENEMIGO
+			{
+				int enemigoAEliminar = rand() % nivel[nivelActual].NumeroEnemigosVisibles;
+				enemigoArreglo[enemigoAEliminar]->simularColision(true);
+			}
+			if (keys[SDLK_v])//NUESTRA NAVE / NAVE ENEMIGO
+			{
+
+			}
+
+			//CONTROL DE COLISIONES//
+			for (int i = 0; i < nivel[nivelActual].NumeroEnemigosVisibles; i++)
+			{
+				if (enemigoArreglo[i]->estaColisionandoConBala(nave))
+					vida--;
+				if (nave->estaColisionandoConBala(enemigoArreglo[i]))
 				{
-					enemigoArreglo[i]->Pintar(NAVE_ENEMIGO);
-					enemigoArreglo[i]->AutoDisparar(nivel[nivelActual].balasMaximas);
+					enemigoArreglo[i]->setVisible(false);
+					nave->simularColision(false);
+					enemigosEliminados++;
+					if (enemigosEliminados < nivel[nivelActual].NumeroEnemigosAEliminar)
+					{
+						enemigoArreglo[i]->CrearNuevo();
+					}
 				}
+			}
+
+			if (vida <= 0)
+			{
+				estado = ESTADO_TERMINANDO;
+			}
+			if (enemigosEliminados >= nivel[nivelActual].NumeroEnemigosAEliminar)
+			{
+				nivelActual++;
+				//CARGAR OTRO FONDO
+			}
+
+			nave->Pintar(NAVE_PROPIA);
+			for (int i = 0; i<nivel[nivelActual].NumeroEnemigosVisibles; i++)
+			{
+				enemigoArreglo[i]->Pintar(NAVE_ENEMIGO);
+				enemigoArreglo[i]->AutoDisparar(nivel[nivelActual].balasMaximas);
+			}
 			break;
 			
 		case Estado ::ESTADO_TERMINANDO:
 			printf("\n4. ESTADO_TERMINANDO");
 			estado=ESTADO_MENU;
-			;
+			
 			break;
 		case Estado ::ESTADO_FINALIZANDO:
 			printf("\n5. ESTADO_FINALIZADO");
@@ -185,7 +229,7 @@ bool CGame::EsLimitePantalla(Objeto * objeto, int bandera)
 }
 void CGame::MoverEnemigo()
 {
-		for (int i = 0; i < 10; i++)
+	for (int i = 0; i < nivel[nivelActual].NumeroEnemigosVisibles; i++)
 		{
 			if(enemigoArreglo[i]->GetNaveObjeto()->ObtenerPasoActual()==0)
 				if (!EsLimitePantalla(enemigoArreglo[i]->GetNaveObjeto(), BORDE_DERECHO))

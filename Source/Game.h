@@ -50,6 +50,9 @@ private:
 	void InicializandoStage();
 	int nivelActual;
 	Estado estado;
+
+	int vida;
+	int enemigosEliminados;
 };
 
 #endif
