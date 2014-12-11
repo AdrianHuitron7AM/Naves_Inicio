@@ -147,8 +147,10 @@ bool CGame::Start()
 			//CONTROL DE COLISIONES//
 			for (int i = 0; i < nivel[nivelActual].NumeroEnemigosVisibles; i++)
 			{
-				if (enemigoArreglo[i]->estaColisionandoConBala(nave))
+				if (enemigoArreglo[i]->estaColisionandoConBala(nave)){
 					vida--;
+					enemigoArreglo[i]->simularColision(false);
+				}
 				if (nave->estaColisionandoConBala(enemigoArreglo[i]))
 				{
 					enemigoArreglo[i]->setVisible(false);
@@ -163,7 +165,7 @@ bool CGame::Start()
 
 			if (vida <= 0)
 			{
-				estado = ESTADO_TERMINANDO;
+				estado = ESTADO_MENU;
 			}
 			if (enemigosEliminados >= nivel[nivelActual].NumeroEnemigosAEliminar)
 			{
