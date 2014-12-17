@@ -280,26 +280,12 @@ void CGame::Menu()
 		if (keys[SDLK_UP])
 		{
 			opcionSeleccionada = MODULO_TEXTO_MENUOPCION1;
-			/* if (i == opcionSeleccionada)
-			textos->Pintar(i + 2, 312, 250 + (j * 30));
-			else
-			textos->Pintar(i, 310, 250 + (j * 30));*/
 		}
 
 		if (keys[SDLK_DOWN])
 		{
 			opcionSeleccionada = MODULO_TEXTO_MENUOPCION2;
-			/*if (i == opcionSeleccionada)
-			textos->Pintar(i + 2, 308, 250 + (j * 30));
-			else
-			textos->Pintar(i, 310, 250 + (j * 30));*/
-
 		}
-
-		/*if (i == opcionSeleccionada)
-		textos->Pintar(i + 2, 308, 250 + (j * 30));
-		else
-		textos->Pintar(i, 310, 250 + (j * 30));*/
 
 		if (i == opcionSeleccionada)
 			textos->Pintar(i + 2, 312, 250 + (j * 30));
